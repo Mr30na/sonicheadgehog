@@ -11,10 +11,14 @@ const k = kaplay({
         jump:{
             keyboard:["up","space"],
             mouse:"left"
+        },
+        start:{
+            keyboard:["space","enter"]
         }
     },
     debugKey:"a",
     debug:true
 })
+k.setGravity(3200);
 
 export default k;

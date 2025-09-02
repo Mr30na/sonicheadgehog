@@ -1,4 +1,5 @@
 import k from "../ctx";
+import { createCharacter } from "../enteties/character";
 export default function startGame(){
     if(!k.getData("best_score")){k.setData("best_score",0)}
     k.onButtonPress("jump",()=>k.go("game"));
@@ -14,7 +15,8 @@ export default function startGame(){
         k.add([k.sprite("platform"),k.pos(0,450),k.scale(4)]),
         k.add([k.sprite("platform"),k.pos(platfromWidth*4,450),k.scale(4)])
     ]
-
+    let char = createCharacter(k.vec2(200,745));
+    char.play("run")
     k.onUpdate(()=>{
         if(bgPieces[1].pos.x<0){
             bgPieces[0].moveTo(bgPieces[1].pos.x + bgwidth*2,0);
@@ -29,7 +31,16 @@ export default function startGame(){
             platforms.push(platforms.shift())
         }
 
-        platforms[0].move(-2000,0)
+        platforms[0].move(-1000,0)
         platforms[1].moveTo(platforms[0].pos.x+ platforms[1].width*4,450)
+
+        char.getAnim("run")
     })
+
+    /*k.onButtonPress("jump",()=>{
+        char.play("jump")
+    })
+    k.onButtonRelease("jump",()=>{
+        char.play("run")
+    })*/
 }

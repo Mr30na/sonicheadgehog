@@ -17,6 +17,7 @@ const k = kaplay({
             mouse:"left"
         }
     },
+    touchToMouse:true,
     debugKey:"a",
     debug:true
 })

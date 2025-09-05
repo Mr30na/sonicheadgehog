@@ -6,6 +6,7 @@ export function createCharacter(pos){
         k.scale(4),
         k.area(),
         k.anchor("center"),
+        k.body(),
         k.pos(pos)
     ])
 }

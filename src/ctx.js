@@ -13,7 +13,8 @@ const k = kaplay({
             mouse:"left"
         },
         start:{
-            keyboard:["space","enter"]
+            keyboard:["space","enter"],
+            mouse:"left"
         }
     },
     debugKey:"a",

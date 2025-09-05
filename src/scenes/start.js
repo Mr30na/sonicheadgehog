@@ -15,6 +15,14 @@ export default function startGame(){
         k.add([k.sprite("platform"),k.pos(0,450),k.scale(4)]),
         k.add([k.sprite("platform"),k.pos(platfromWidth*4,450),k.scale(4)])
     ]
+         k.add([
+            k.pos(0,832),
+            k.opacity(0),
+            k.body({isStatic:true}),
+            k.rect(1920,300),
+            "platform",
+            k.area()
+        ])
     k.add([
         k.pos(k.center().x,200),
         k.text("Welcome to sonic",{
@@ -61,4 +69,9 @@ export default function startGame(){
     k.onButtonRelease("jump",()=>{
         char.play("run")
     })
+
+    k.onButtonDown("start",()=>{
+        k.go("game")
+    })
+
 }

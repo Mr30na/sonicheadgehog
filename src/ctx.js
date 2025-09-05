@@ -5,7 +5,7 @@ const k = kaplay({
     height:1080,
     letterbox:true,
     global:false,
-    background:[0, 204, 255],
+    background:[0,0,0],
     touchToMouse:true,
     buttons:{
         jump:{
@@ -19,6 +19,6 @@ const k = kaplay({
     debugKey:"a",
     debug:true
 })
-k.setGravity(3200);
+
 
 export default k;

@@ -101,10 +101,9 @@ export default function game() {
   });
   char.onCollide("enemy", (enemy) => {
     if (char.isGrounded()) {
-      k.debug.log("hit");
+      k.go("gameover")
     } else {
       k.destroy(enemy);
-
       char.play("jump");
       char.jump(1500);
       score += 10;
@@ -116,7 +115,6 @@ export default function game() {
           size: 50,
         }),
       ]);
-      k.debug.log(score);
     }
   });
 }

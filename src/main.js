@@ -1,6 +1,7 @@
 import k from "./ctx";
 import startGame from "./scenes/start";
 import game from "./scenes/game";
+import gameOver from "./scenes/gameover";
 
 k.loadSprite("chemic-bg", "images/chemical-bg.png");
 k.loadSprite("platform", "images/platforms.png");
@@ -30,5 +31,7 @@ k.loadSprite("motobug","images/motobug.png",{
 k.loadFont("mania","fonts/mania.ttf")
 k.scene("start", startGame);
 k.scene("game", game);
+k.scene("gameover",gameOver)
+
 
 k.go("start");

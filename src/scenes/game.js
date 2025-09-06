@@ -3,6 +3,8 @@ import { createCharacter } from "../enteties/character";
 import { createMob } from "../enteties/mob";
 let GAME_SPEED = 100;
 let score = 0;
+
+let jumpAudio = new Audio("/sounds/Jump.wav");
 k.setGravity(3200);
 export default function game() {
   if (!k.getData("best_score")) {
@@ -92,6 +94,7 @@ export default function game() {
 
   k.onButtonPress("jump", () => {
     if (char.isGrounded()) {
+      jumpAudio.play()
       char.play("jump");
       char.jump(1500);
     }

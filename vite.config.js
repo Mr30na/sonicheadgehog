@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base:"/sonicheadgehog",
+  base:"./",
   assetsInclude: ["**/*.mp3", "**/*.ogg", "**/*.wav"],
 });

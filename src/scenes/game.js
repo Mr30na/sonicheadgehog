@@ -4,14 +4,18 @@ import { createMob } from "../enteties/mob";
 import jumpSound from "../sounds/Jump.wav";
 import fuzzSound from "../sounds/Hurt.wav";
 import destroySound from "../sounds/Destroy.wav";
+import backgroundMusic from "../sounds/OtherworldlyFoe.mp3";
 let GAME_SPEED = 100;
 let score = 0;
-
 let destroyAudio = new Audio(destroySound)
 let jumpAudio = new Audio(jumpSound);
 let fuzzAudio = new Audio(fuzzSound);
+let themeSong = new Audio(backgroundMusic);
+
 k.setGravity(3200);
 export default function game() {
+  themeSong = new Audio(backgroundMusic);
+  themeSong.play();
   if (!k.getData("best_score")) {
     k.setData("best_score", 0);
   }
@@ -112,6 +116,7 @@ export default function game() {
       GAME_SPEED = 100;
       score = 0;
       fuzzAudio.play();
+      themeSong.pause()
       k.go("gameover")
     } else {
       destroyAudio.play();

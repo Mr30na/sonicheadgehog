@@ -1,10 +1,15 @@
 import k from "../ctx";
 import { createCharacter } from "../enteties/character";
 import { createMob } from "../enteties/mob";
+import jumpSound from "../sounds/Jump.wav";
+import fuzzSound from "../sounds/Hurt.wav";
+import destroySound from "../sounds/Destroy.wav";
 let GAME_SPEED = 100;
 let score = 0;
 
-let jumpAudio = new Audio("/sounds/Jump.wav");
+let destroyAudio = new Audio(destroySound)
+let jumpAudio = new Audio(jumpSound);
+let fuzzAudio = new Audio(fuzzSound);
 k.setGravity(3200);
 export default function game() {
   if (!k.getData("best_score")) {
@@ -104,8 +109,12 @@ export default function game() {
   });
   char.onCollide("enemy", (enemy) => {
     if (char.isGrounded()) {
+      GAME_SPEED = 100;
+      score = 0;
+      fuzzAudio.play();
       k.go("gameover")
     } else {
+      destroyAudio.play();
       k.destroy(enemy);
       char.play("jump");
       char.jump(1500);

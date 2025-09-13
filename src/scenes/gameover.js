@@ -4,4 +4,8 @@ export default function gameOver(){
         k.pos(100,100),
         k.text("game over")
     ])
+
+        k.onButtonDown("start",()=>{
+            k.go("game")
+        })
 }

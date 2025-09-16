@@ -113,6 +113,8 @@ export default function game() {
   });
   char.onCollide("enemy", (enemy) => {
     if (char.isGrounded()) {
+      if(k.getData("best_score")<score){k.setData("best_score",score)};
+      k.setData("current_score",score)
       GAME_SPEED = 100;
       score = 0;
       fuzzAudio.play();

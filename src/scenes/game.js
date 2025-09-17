@@ -5,9 +5,11 @@ import jumpSound from "../sounds/Jump.wav";
 import fuzzSound from "../sounds/Hurt.wav";
 import destroySound from "../sounds/Destroy.wav";
 import backgroundMusic from "../sounds/OtherworldlyFoe.mp3";
+import addPlatform from "../enteties/platforms";
+import { parallaxScroll } from "../utils/scrolls";
 let GAME_SPEED = 100;
 let score = 0;
-let destroyAudio = new Audio(destroySound)
+let destroyAudio = new Audio(destroySound);
 let jumpAudio = new Audio(jumpSound);
 let fuzzAudio = new Audio(fuzzSound);
 let themeSong = new Audio(backgroundMusic);
@@ -39,19 +41,14 @@ export default function game() {
   ]);
 
   const platfromWidth = 1280;
+
+  //this variable holds only the picture of our platforms
   const platforms = [
-    k.add(
-      [k.sprite("platform"), k.pos(0, 450), k.scale(4)],
-      k.body({ isStatic: true }),
-      k.area()
-    ),
-    k.add(
-      [k.sprite("platform"), k.pos(platfromWidth * 4, 450), k.scale(4)],
-      k.body({ isStatic: true }),
-      k.area()
-    ),
+    addPlatform({ x: 0, y: 450 }),
+    addPlatform({ x: platfromWidth * 4, y: 450 }),
   ];
 
+  // this object is the actual platform with collision detection logic 
   k.add([
     k.pos(0, 832),
     k.opacity(0),
@@ -60,6 +57,7 @@ export default function game() {
     "platform",
     k.area(),
   ]);
+  
   let char = createCharacter(k.vec2(200, 745));
   k.loop(20, () => {
     GAME_SPEED += 50;
@@ -82,28 +80,14 @@ export default function game() {
   spawnMob();
   char.play("run");
   k.onUpdate(() => {
-    if (bgPieces[1].pos.x < 0) {
-      bgPieces[0].moveTo(bgPieces[1].pos.x + bgwidth * 2, 0);
-      bgPieces.push(bgPieces.shift());
-    }
-
-    bgPieces[0].move(-GAME_SPEED, 0);
-    bgPieces[1].moveTo(bgPieces[0].pos.x + bgwidth * 2, 0);
-
-    if (platforms[1].pos.x < 0) {
-      platforms[0].moveTo(platforms[1].pos.x + platforms[1].width, 450);
-      platforms.push(platforms.shift());
-    }
-
-    platforms[0].move(-GAME_SPEED * 10, 0);
-    platforms[1].moveTo(platforms[0].pos.x + platforms[1].width * 4, 450);
-
+    parallaxScroll(bgPieces,[bgwidth * 2,bgwidth * 2],0,GAME_SPEED);
+    parallaxScroll(platforms,[platforms[1].width,platforms[1].width*4],450,GAME_SPEED*10);
     char.getAnim("run");
   });
 
   k.onButtonPress("jump", () => {
     if (char.isGrounded()) {
-      jumpAudio.play()
+      jumpAudio.play();
       char.play("jump");
       char.jump(1500);
     }
@@ -113,13 +97,15 @@ export default function game() {
   });
   char.onCollide("enemy", (enemy) => {
     if (char.isGrounded()) {
-      if(k.getData("best_score")<score){k.setData("best_score",score)};
-      k.setData("current_score",score)
+      if (k.getData("best_score") < score) {
+        k.setData("best_score", score);
+      }
+      k.setData("current_score", score);
       GAME_SPEED = 100;
       score = 0;
       fuzzAudio.play();
-      themeSong.pause()
-      k.go("gameover")
+      themeSong.pause();
+      k.go("gameover");
     } else {
       destroyAudio.play();
       k.destroy(enemy);
